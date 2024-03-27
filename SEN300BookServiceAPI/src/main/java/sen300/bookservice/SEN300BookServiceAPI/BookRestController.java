@@ -39,6 +39,50 @@ public class BookRestController {
         booksRepo.save(book);
     }
 
+    @PostMapping(path = "/addbooks")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public void createBooks(@RequestBody List<Book> books) {
+
+        for (Book book : books) {
+            book.setBookGuid(UUID.randomUUID());
+            book.setCreatedDate(LocalDate.now());
+            book.setPublishedDate(createRandomDate(1900, 2023));
+            booksRepo.save(book);
+        }
+    }
+
+    @GetMapping(path = "/search/{searchText}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<Book> searchItems(@PathVariable(required = true) String searchText) {
+        return booksRepo.findByTitleContainingOrDescriptionContaining(searchText, searchText);
+    }
+
+    @GetMapping(path = "/{bookUUID}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public Book getBook(@PathVariable UUID bookUUID) {
+        return booksRepo.findById(bookUUID).orElseThrow(() -> new NoSuchElementException());
+    }
+
+    @PutMapping(path = "/{bookUUID}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateBook(@PathVariable(required = true) UUID bookUUID, @RequestBody Book book) {
+
+        if (!book.getBookGuid().equals(bookUUID)) {
+            throw new RuntimeException(
+                    String.format("Path itemId %s did not match body itemId %s", bookUUID, book.getBookGuid()));
+        }
+
+        booksRepo.save(book);
+    }
+
+    @DeleteMapping(path = "/{bookUUID}")
+    @ResponseStatus(HttpStatus.OK)
+    public void DeleteItem(@PathVariable(required = true) UUID bookUUID) {
+
+        booksRepo.deleteById(bookUUID);
+    }
+
+
     private static int createRandomIntBetween(int start, int end) {
         return start + (int) Math.round(Math.random() * (end - start));
     }
