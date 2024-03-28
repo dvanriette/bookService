@@ -30,9 +30,6 @@ public class BookRestController {
     @PostMapping(path = "")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void createBook(@RequestBody Book book) {
-        // item.setBookId(item.getBookId()); // why doesn't it do it automatically from
-        // the json - is it due to AUTO?
-        // System.out.println(item.getPublishedDate());
         book.setBookGuid(UUID.randomUUID());
         book.setCreatedDate(LocalDate.now());
         book.setPublishedDate(createRandomDate(1900, 2023));
