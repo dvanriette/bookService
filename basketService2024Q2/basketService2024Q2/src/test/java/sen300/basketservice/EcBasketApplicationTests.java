@@ -1,10 +1,10 @@
-package sen300basketservice.basketservice;
+package sen300.basketservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BasketServiceApplicationTests {
+class EcBasketApplicationTests {
 
 	@Test
 	void contextLoads() {

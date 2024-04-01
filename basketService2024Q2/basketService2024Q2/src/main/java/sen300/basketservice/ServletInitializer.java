@@ -1,4 +1,4 @@
-package sen300basketservice.basketservice;
+package sen300.basketservice;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -7,7 +7,7 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(BasketServiceApplication.class);
+		return application.sources(BasketApplication.class);
 	}
 
 }
